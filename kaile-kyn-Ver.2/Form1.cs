@@ -9,13 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Media;
-using System.Windows.Forms.Timer;
 
 
 namespace kaile_kyn_Ver._2
 {
     public partial class Form1 : Form
     {
+        
+
         public Form1()
         {
             InitializeComponent();
@@ -40,10 +41,10 @@ namespace kaile_kyn_Ver._2
             }
 
             
-            pictureBox1.ImageLocation = @"c:\kaile_move.gif";
+            pictureBox1.ImageLocation = @".\kaile_move.gif";
 
             string s2 = "やぁ　僕の名前はカイル";
-            string s3 = "\r\n" + "こんなご時世だから、もちろん熱は計ってパソコン触っているんだよね？？";
+            string s3 = "\r\n" + "こんなご時世だから、もちろん熱を計ってから"+"\r\n"+"パソコンを触ってるんだよね？";
             string s4 = "\r\n" + "さっさと何度だったか教えてくれない？";
 
             string output = "";
@@ -444,23 +445,15 @@ namespace kaile_kyn_Ver._2
                 
             }
         }
-        private System.Timers.Timer t;
-        private void button2_Click(object sender, EventArgs e)
+        
+        private async void button2_Click(object sender, EventArgs e)
         {
             
             // フォームのウィンドウを最小化する
             this.WindowState = FormWindowState.Minimized;
-                t = new System.Timers.Timer();
-                t.Tick += new EventHandler(MyEvent);
-                t.Interval = 10000; // ミリ秒単位で指定
-                t.Start();
-            }
+            await Task.Delay(1000);
+            this.WindowState = FormWindowState.Normal;
 
-            private void MyEvent(object sender, EventArgs e)
-            {
-                t.Stop();
-                MessageBox.Show("10秒経過", "Test", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
         }
 
 
