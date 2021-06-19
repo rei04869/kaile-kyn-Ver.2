@@ -23,7 +23,7 @@ namespace kaile_kyn_Ver._2
         }
         private void playSimpleSound()
         {
-            SoundPlayer simpleSound = new SoundPlayer(@"c:\image\serif3.wav");
+            SoundPlayer simpleSound = new SoundPlayer(@".\serif3.wav");
             simpleSound.Play();
         }
         private async void Form1_Load(object sender, EventArgs e)
