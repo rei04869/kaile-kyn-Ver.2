@@ -328,46 +328,49 @@ namespace kaile_kyn_Ver._2
                 button1.Visible = false;
                 label2.Visible = true;
                 label1.Visible = false;
-                //if(cnt => 5 && cnt < 10)
+                int cnt = 0;
+
+                if (Btemp > 37.5)
                 {
-                    string s8 = "本当に" + label3.Text + "℃で合ってるの？";
-
-                    string output1 = "";
-
-                    int waitTimeChar1 = 50; // 一文字の待機時間
-                    int waitTimeLine = 400; // 行間の待機時間
-
-                    await OutputMessage1(s8);
-                    await Task.Delay(waitTimeLine);
-
-                    
-                    // 関数：1文字ずつ表示する
-                    async Task OutputMessage1(string s)
+                    if ((cnt > 5) && (cnt < 10))
                     {
-                        // foreachで1文字ずつ処理（後半）
-                        foreach (char c in s)
+                        string s8 = "本当に" + label3.Text + "℃で合ってるの？";
+
+                        string output2 = "";
+
+                        int waitTimeChar2 = 50; // 一文字の待機時間
+                        int waitTimeLine2 = 400; // 行間の待機時間
+
+                        await OutputMessage2(s8);
+                        await Task.Delay(waitTimeLine2);
+
+
+                        // 関数：1文字ずつ表示する
+                        async Task OutputMessage2(string s)
                         {
-                            // 1文字追加
-                            output1 += c.ToString();
-
-                            // ラベルに表示
-                            this.label2.Text = output1;
-
-                            // 空白文字以外にディレイさせる
-                            if ("" != c.ToString())
+                            // foreachで1文字ずつ処理（後半）
+                            foreach (char c in s)
                             {
-                                // ディレイ
-                                await Task.Delay(waitTimeChar1);
+                                // 1文字追加
+                                output2 += c.ToString();
+
+                                // ラベルに表示
+                                this.label2.Text = output2;
+
+                                // 空白文字以外にディレイさせる
+                                if ("" != c.ToString())
+                                {
+                                    // ディレイ
+                                    await Task.Delay(waitTimeChar2);
+                                }
                             }
                         }
                     }
-                }
-                if (Btemp > 37.5)
-                {
                     textBox1.ResetText();
                     string s4 = "......え？";
                     string s6 = "\r\n" + "聞き間違いだと思うからもう一回聞くね？";
                     string s7 = "\r\n" + "今朝何度だった？";
+                    cnt = cnt + 1;
 
                     string output1 = "";
 
@@ -381,9 +384,7 @@ namespace kaile_kyn_Ver._2
                     await Task.Delay(waitTimeLine);
 
                     await OutputMessage1(s7);
-
-                    int cnt = 0;
-                    cnt++;
+                    
                     
 
                     textBox1.Visible = true;
