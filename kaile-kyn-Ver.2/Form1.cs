@@ -9,13 +9,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Media;
+using System.Security.Cryptography;
+using System.Diagnostics;
 
 
 namespace kaile_kyn_Ver._2
 {
     public partial class Form1 : Form
     {
+        bool ispattern1End = false;
+        bool ispattern2End = false;
+        bool ispattern3End = false;
+        bool ispattern4End = false;
+        bool ispattern5End = false;
+        bool ispattern6End = false;
+
         
+
+        String[] netsuword = new string[] { "やぁ　僕の名前はカイル", "\r\n" + "こんなご時世だから、もちろん熱を計った上で" + "\r\n" + "パソコンを触ってるんだよね？", "\r\n" + "何度だったか教えてくれない？" };
+
+        String[] washword = new string[] { "手洗いの正しいやり方って結構普及してないんだよね", "\r\n" + "時には初心に帰って勉強することも大事だよ" };
+
+        String[] ugaiword = new string[] { "この部屋.......", "\r\n" + "空気が淀んでいるんだけど...", "\r\n" + "そろそろ換気しな？" };
+
+        String[] shoudokuword = new string[] { "パソコン触る前にしっかり消毒した？", "\r\n" + "ちゃんと使っているならそろそろなくなるよね？", "\r\n" + "しっかり買っとこう" };
+
+        String[] koikeword = new string[] { "最近コロナ減ったよね～", "\r\n" + "だから最近コロナ対策怠ってるんじゃない？", "\r\n" + "こんな時はあの方のメッセージをもう一度見てみよう！！" };
+
+        String[] gokigenword = new string[] { "ふぅ～...", "\r\n" + "これで一応コロナ対策は出来たかな！", "\r\n" + "僕がいなくてもしっかりと対策するんだよ？", "\r\n" + "じゃあね♪　バイバイ！" };
 
         public Form1()
         {
@@ -26,8 +47,9 @@ namespace kaile_kyn_Ver._2
             SoundPlayer simpleSound = new SoundPlayer(@".\serif3.wav");
             simpleSound.Play();
         }
-        private async void Form1_Load(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
+            button3.Enabled = false;
             // ウィンドウを画面右下に表示させる
             int left = Screen.PrimaryScreen.WorkingArea.Width - this.Width;
             int top = Screen.PrimaryScreen.WorkingArea.Height - this.Height;
@@ -40,40 +62,31 @@ namespace kaile_kyn_Ver._2
 
             }
 
-            
             pictureBox1.ImageLocation = @".\kaile_move.gif";
+            printstring1(netsuword);
+            //ispattern1End = true;
 
-            string s2 = "やぁ　僕の名前はカイル";
-            string s3 = "\r\n" + "こんなご時世だから、もちろん熱を計ってから"+"\r\n"+"パソコンを触ってるんだよね？";
-            string s4 = "\r\n" + "さっさと何度だったか教えてくれない？";
+
+
+            //pictureBox1.ImageLocation = @".\kaile_stop.gif";
+
+
+        }
+        //熱の発言だけ違う関数を用いる。
+        private async void printstring1(string[] delayword)
+        {
 
             string output = "";
-            
             int waitTimeChar = 100; // 一文字の待機時間
             int waitTimeLine = 400; // 行間の待機時間
+            int dwNum = delayword.Length; //dwNum = delaywordNum
+            for (int i = 0; i < dwNum; i++)
+            {
+                await OutputMessage(delayword[i]);
+                pictureBox1.ImageLocation = @".\kaile_move.gif";
+                await Task.Delay(waitTimeLine);
 
-
-            await OutputMessage(s2);
-            await Task.Delay(waitTimeLine);
-
-            await OutputMessage(s3);
-            await Task.Delay(waitTimeLine);
-
-            await OutputMessage(s4);
-            
-
-            pictureBox1.ImageLocation = @"c:\image\kaile_stop.gif";
-
-            textBox1.Visible = true;
-            button1.Visible = true;
-
-
-            
-
-
-
-
-            // 関数：1文字ずつ表示する
+            }
             async Task OutputMessage(string s)
             {
                 // foreachで1文字ずつ処理（後半）
@@ -94,7 +107,189 @@ namespace kaile_kyn_Ver._2
                     }
                 }
             }
+            textBox1.Visible = true;
+            button1.Visible = true;
+            button3.Enabled = true;
         }
+        private async void printstring2(string[] delayword)
+        {
+            string output = "";
+            int waitTimeChar = 100; // 一文字の待機時間
+            int waitTimeLine = 400; // 行間の待機時間
+            int dwNum = delayword.Length; //dwNum = delaywordNum
+            for (int i = 0; i < dwNum; i++)
+            {
+                await OutputMessage(delayword[i]);
+                pictureBox1.ImageLocation = @".\kaile_move.gif";
+                await Task.Delay(waitTimeLine);
+            }
+            System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=Jmk4mrR3RVA");
+            async Task OutputMessage(string s)
+            {
+
+                // foreachで1文字ずつ処理（後半）
+                foreach (char c in s)
+                {
+                    // 1文字追加
+                    output += c.ToString();
+
+                    // ラベルに表示
+                    this.label1.Text = output;
+                    playSimpleSound();
+
+                    // 空白文字以外にディレイさせる
+                    if ("" != c.ToString())
+                    {
+                        // ディレイ
+                        await Task.Delay(waitTimeChar);
+                    }
+                }
+            }
+            button3.Enabled = true;
+        }
+        private async void printstring3(string[] delayword)
+        {
+            string output = "";
+            int waitTimeChar = 100; // 一文字の待機時間
+            int waitTimeLine = 400; // 行間の待機時間
+            int dwNum = delayword.Length; //dwNum = delaywordNum
+            for (int i = 0; i < dwNum; i++)
+            {
+                await OutputMessage(delayword[i]);
+                pictureBox1.ImageLocation = @".\kaile_move.gif";
+                await Task.Delay(waitTimeLine);
+            }
+            System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=wh8WGnejYJY");
+            async Task OutputMessage(string s)
+            {
+                // foreachで1文字ずつ処理（後半）
+                foreach (char c in s)
+                {
+                    // 1文字追加
+                    output += c.ToString();
+
+                    // ラベルに表示
+                    this.label1.Text = output;
+                    playSimpleSound();
+
+                    // 空白文字以外にディレイさせる
+                    if ("" != c.ToString())
+                    {
+                        // ディレイ
+                        await Task.Delay(waitTimeChar);
+                    }
+                }
+            }
+            button3.Enabled = true;
+        }
+        private async void printstring4(string[] delayword)
+        {
+            string output = "";
+            int waitTimeChar = 100; // 一文字の待機時間
+            int waitTimeLine = 400; // 行間の待機時間
+            int dwNum = delayword.Length; //dwNum = delaywordNum
+            for (int i = 0; i < dwNum; i++)
+            {
+                await OutputMessage(delayword[i]);
+                pictureBox1.ImageLocation = @".\kaile_move.gif";
+                await Task.Delay(waitTimeLine);
+            }
+            System.Diagnostics.Process.Start("https://www.amazon.co.jp/%E6%B6%88%E6%AF%92%E7%94%A8%E3%82%A2%E3%83%AB%E3%82%B3%E3%83%BC%E3%83%AB/s?k=%E6%B6%88%E6%AF%92%E7%94%A8%E3%82%A2%E3%83%AB%E3%82%B3%E3%83%BC%E3%83%AB");
+            async Task OutputMessage(string s)
+            {
+
+                // foreachで1文字ずつ処理（後半）
+                foreach (char c in s)
+                {
+                    // 1文字追加
+                    output += c.ToString();
+
+                    // ラベルに表示
+                    this.label1.Text = output;
+                    playSimpleSound();
+
+                    // 空白文字以外にディレイさせる
+                    if ("" != c.ToString())
+                    {
+                        // ディレイ
+                        await Task.Delay(waitTimeChar);
+                    }
+                }
+            }
+            button3.Enabled = true;
+        }
+        //熱の関数以外はここで関数を用いる。
+        private async void printstring5(string[] delayword)
+        {
+            string output = "";
+            int waitTimeChar = 100; // 一文字の待機時間
+            int waitTimeLine = 400; // 行間の待機時間
+            int dwNum = delayword.Length; //dwNum = delaywordNum
+            for (int i = 0; i < dwNum; i++)
+            {
+                await OutputMessage(delayword[i]);
+                pictureBox1.ImageLocation = @".\kaile_move.gif";
+                await Task.Delay(waitTimeLine);
+            }
+            async Task OutputMessage(string s)
+            {
+                // foreachで1文字ずつ処理（後半）
+                foreach (char c in s)
+                {
+                    // 1文字追加
+                    output += c.ToString();
+
+                    // ラベルに表示
+                    this.label1.Text = output;
+                    playSimpleSound();
+
+                    // 空白文字以外にディレイさせる
+                    if ("" != c.ToString())
+                    {
+                        // ディレイ
+                        await Task.Delay(waitTimeChar);
+                    }
+                }
+            }
+            button3.Enabled = true;
+        }
+        private async void printstring6(string[] delayword)
+        {
+            string output = "";
+            int waitTimeChar = 100; // 一文字の待機時間
+            int waitTimeLine = 400; // 行間の待機時間
+            int dwNum = delayword.Length; //dwNum = delaywordNum
+            for (int i = 0; i < dwNum; i++)
+            {
+                await OutputMessage(delayword[i]);
+                pictureBox1.ImageLocation = @".\kaile_move.gif";
+                await Task.Delay(waitTimeLine);
+            }
+            async Task OutputMessage(string s)
+            {
+                // foreachで1文字ずつ処理（後半）
+                foreach (char c in s)
+                {
+                    // 1文字追加
+                    output += c.ToString();
+
+                    // ラベルに表示
+                    this.label1.Text = output;
+                    playSimpleSound();
+
+                    // 空白文字以外にディレイさせる
+                    if ("" != c.ToString())
+                    {
+                        // ディレイ
+                        await Task.Delay(waitTimeChar);
+                    }
+                }
+            }
+            button3.Enabled = true;
+        }
+
+
+
 
 
 
@@ -308,7 +503,7 @@ namespace kaile_kyn_Ver._2
             this.label3.Text = txtBox.Text;
 
         }
-
+        int cnt = 0;
         private async void button1_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("今朝計った温度は" + label3.Text + "℃でよろしいですか？",
@@ -316,147 +511,166 @@ namespace kaile_kyn_Ver._2
              MessageBoxButtons.YesNo,
              MessageBoxIcon.Question,
              MessageBoxDefaultButton.Button2);
-
             double Btemp = double.Parse(label3.Text);
 
-            
+            String[] konetsuword = new string[] { "今すぐにパソコンをやめろ" };
+
+            String[] binetsuword = new string[] { "......え？", "\r\n" + "聞き間違いだと思うからもう一回聞くね？", "\r\n" + "今朝何度だった？" };
+
+            String[] heinetuword = new string[] { "ふ～ん、まぁ熱がない事は当然だけどね" };
+
+            String[] angryword = new string[] { "熱があるくせにパソコン触ってんじゃねぇよ", "\r\n" + "熱を直してから出直してね♪" };
+
+
+
             //何が選択されたか調べる
             if (result == DialogResult.Yes)
             {
                 //「はい」が選択された時
                 textBox1.Visible = false;
                 button1.Visible = false;
-                label2.Visible = true;
-                label1.Visible = false;
-                int cnt = 0;
+                ispattern1End = true;
+                button3.Enabled = false;
 
-                if (Btemp > 37.5)
+                if (Btemp > 37.3)
                 {
-                    if ((cnt > 5) && (cnt < 10))
-                    {
-                        string s8 = "本当に" + label3.Text + "℃で合ってるの？";
 
-                        string output2 = "";
-
-                        int waitTimeChar2 = 50; // 一文字の待機時間
-                        int waitTimeLine2 = 400; // 行間の待機時間
-
-                        await OutputMessage2(s8);
-                        await Task.Delay(waitTimeLine2);
-
-
-                        // 関数：1文字ずつ表示する
-                        async Task OutputMessage2(string s)
-                        {
-                            // foreachで1文字ずつ処理（後半）
-                            foreach (char c in s)
-                            {
-                                // 1文字追加
-                                output2 += c.ToString();
-
-                                // ラベルに表示
-                                this.label2.Text = output2;
-
-                                // 空白文字以外にディレイさせる
-                                if ("" != c.ToString())
-                                {
-                                    // ディレイ
-                                    await Task.Delay(waitTimeChar2);
-                                }
-                            }
-                        }
-                    }
-                    textBox1.ResetText();
-                    string s4 = "......え？";
-                    string s6 = "\r\n" + "聞き間違いだと思うからもう一回聞くね？";
-                    string s7 = "\r\n" + "今朝何度だった？";
-                    cnt = cnt + 1;
-
-                    string output1 = "";
-
-                    int waitTimeChar1 = 50; // 一文字の待機時間
-                    int waitTimeLine = 400; // 行間の待機時間
-
-                    await OutputMessage1(s4);
-                    await Task.Delay(waitTimeLine);
-
-                    await OutputMessage1(s6);
-                    await Task.Delay(waitTimeLine);
-
-                    await OutputMessage1(s7);
-                    
-                    
-
-                    textBox1.Visible = true;
-                    button1.Visible = true;
-
-                    // 関数：1文字ずつ表示する
-                    async Task OutputMessage1(string s)
-                    {
-                        // foreachで1文字ずつ処理（後半）
-                        foreach (char c in s)
-                        {
-                            // 1文字追加
-                            output1 += c.ToString();
-
-                            // ラベルに表示
-                            this.label2.Text = output1;
-
-                            // 空白文字以外にディレイさせる
-                            if ("" != c.ToString())
-                            {
-                                // ディレイ
-                                await Task.Delay(waitTimeChar1);
-                            }
-                        }
-                    }
+                    printWord(konetsuword);
+                    pictureBox1.ImageLocation = @".\kaile_move.gif";
+                    await Task.Delay(3000);
+                    this.Close();
                 }
-                else
+                else if ((Btemp > 36.9) && (Btemp < 37.4))
                 {
-                    string s5 = "ふ～ん、まぁ熱がない事は当然だけどね";
 
-                    string output = "";
-
-                    int waitTimeChar = 50; // 一文字の待機時間
-
-                    await OutputMessage(s5);
-                    // 関数：1文字ずつ表示する
-                    async Task OutputMessage(string s)
+                    cnt += 1;
+                    if (cnt > 2)
                     {
-                        // foreachで1文字ずつ処理（後半）
-                        foreach (char c in s)
-                        {
-                            // 1文字追加
-                            output += c.ToString();
-
-                            // ラベルに表示
-                            this.label2.Text = output;
-
-                            // 空白文字以外にディレイさせる
-                            if ("" != c.ToString())
-                            {
-                                // ディレイ
-                                await Task.Delay(waitTimeChar);
-                            }
-                        }
+                        printWord(angryword);
+                        pictureBox1.ImageLocation = @".\kaile_move.gif";
+                        await Task.Delay(3000);
+                        this.Close();
                     }
+                    else
+                    {
+                        printWord(binetsuword);
+                        pictureBox1.ImageLocation = @".\kaile_move.gif";
+                        textBox1.ResetText();
+                        textBox1.Visible = true;
+                        button1.Visible = true;
+                    }
+
+
+
+
+
                 }
-                
-             
-                
+                else if ((Btemp > 35.9) && (Btemp < 37.0))
+                {
+                    
+                    printWord(heinetuword);
+                    pictureBox1.ImageLocation = @".\kaile_move.gif";
+                    
+                }
             }
         }
-        
+        private async void printWord(string[] delayword)
+        {
+            string output = "";
+            int waitTimeChar = 100; // 一文字の待機時間
+            int waitTimeLine = 400; // 行間の待機時間
+            int dwNum = delayword.Length; //dwNum = delaywordNum
+            for (int i = 0; i < dwNum; i++)
+            {
+                await OutputMessage(delayword[i]);
+                await Task.Delay(waitTimeLine);
+            }
+            async Task OutputMessage(string s)
+            {
+                // foreachで1文字ずつ処理（後半）
+                foreach (char c in s)
+                {
+                    // 1文字追加
+                    output += c.ToString();
+
+                    // ラベルに表示
+                    this.label1.Text = output;
+                    playSimpleSound();
+
+                    // 空白文字以外にディレイさせる
+                    if ("" != c.ToString())
+                    {
+                        // ディレイ
+                        await Task.Delay(waitTimeChar);
+                    }
+                }
+            }
+            button3.Enabled = true;
+        }
+
         private async void button2_Click(object sender, EventArgs e)
         {
-            
+
             // フォームのウィンドウを最小化する
             this.WindowState = FormWindowState.Minimized;
             await Task.Delay(1000);
             this.WindowState = FormWindowState.Normal;
 
         }
+        private async void button3_Click(object sender, EventArgs e)
+        {
 
+            //Form1_Load(sender, e);
+            textBox1.Visible = false;
+            button1.Visible = false;
+            
+            if (!ispattern1End)
+            {
+                pictureBox1.ImageLocation = @".\kaile_move.gif";
+                printstring1(netsuword);
 
+                ispattern1End = true;
+
+            }
+            else if (!ispattern2End)
+            {
+                pictureBox1.ImageLocation = @".\kaile_move.gif";
+                printstring5(ugaiword);
+
+                ispattern2End = true;
+            }
+            else if (!ispattern3End)
+            {
+                pictureBox1.ImageLocation = @".\kaile_move.gif";
+                printstring2(washword);
+
+                ispattern3End = true;
+            }
+            else if (!ispattern4End)
+            {
+                pictureBox1.ImageLocation = @".\kaile_move.gif";
+                printstring4(shoudokuword);
+
+                ispattern4End = true;
+            }
+            else if (!ispattern5End)
+            {
+                pictureBox1.ImageLocation = @".\kaile_move.gif";
+                printstring3(koikeword);
+
+                ispattern5End = true;
+            }
+            else if (!ispattern6End)
+            {
+                pictureBox1.ImageLocation = @".\kaile_move.gif";
+                printstring6(gokigenword);
+
+                ispattern6End = true;
+
+                await Task.Delay(9500);
+                this.Close();
+            }
+
+        }
     }
 }
